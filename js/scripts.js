@@ -9,6 +9,5 @@ $(document).ready(function () {
 })
 
 function displaySearchResults(x){
-
-    alert(x);
+    alert("Yeah! " +$(this).attr("id"));
 }

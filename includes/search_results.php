@@ -12,6 +12,7 @@
 <!--        </div>-->
 <!--    </div>-->
 
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -26,29 +27,30 @@
                 </th>
             </tr>
         </thead>
-        <tbody id="table-results">
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    Development
-                </td>
-                <td>
-                    01/04/2012
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2
-                </td>
-                <td>
-                    Development
-                </td>
-                <td>
-                    02/04/2012
-                </td>
-            </tr>
-        </tbody>
+        <?php displaySearchResults(); ?>
+<!--        <tbody id="table-results">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    1-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    Development-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    01/04/2012-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    2-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    Development-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    02/04/2012-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </tbody>-->
     </table>
 </div>
