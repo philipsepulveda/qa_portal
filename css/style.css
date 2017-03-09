@@ -1,0 +1,51 @@
+.navbar {
+    min-height:80px
+}
+.navbar-brand{
+    height: 80px;
+}
+
+.nav-title{
+    padding-left: 20px;
+    text-align: center;
+}
+.navbar-nav > li > a {
+    padding-top:25px;
+    padding-bottom:25px;
+    font-size: 130%;
+    text-align: center;
+}
+
+.nav-title{
+    font-size: 200%;
+    padding-top:20px !important;
+    padding-bottom:20px !important;
+}
+
+table{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+table > thead > tr > th{
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+thead{
+    background-color: #3c3c3c; color: white;
+}
+
+/*Search field*/
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+.stylish-input-group .form-control{
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
