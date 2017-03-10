@@ -8,5 +8,5 @@
         Test Results
     </h3>
 <!--        Displays the folders found under the test_results folder on left sidebar-->
-        <?php displayTestResultsTable()?>
+        <?php displayTestResultsTable($rootAppDir)?>
 </div>
