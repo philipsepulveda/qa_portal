@@ -29,9 +29,9 @@ function displaySearchResults($rootAppDir)
 function traverseTestResultsFolder($rootAppDir, $rootAppDirArray)
 {
     foreach ($rootAppDirArray as $environmentDir) {
-        //Exclude first two contents
+        //Exclude first two contents of the directory which is "." and ".."
         if ($environmentDir !== '.' && $environmentDir !== '..') {
-            //Traverses the contents inside the testServices folders
+            //Concatenates the service to the root directory to access its contents
             $environmentDirArray = $rootAppDir . $environmentDir;
             //Checks whether path exists
             if (is_dir($environmentDirArray)) {
