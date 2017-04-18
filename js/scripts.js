@@ -1,15 +1,24 @@
-// Empty JS for your own code to be here
-
 $(document).ready(function () {
-    $('div > a').click(function() {
-        var x = $(this).attr("id");
-        $(this).attr("name", x);
+    $('#example').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
 
-        // TODO: insert whatever you want to do with $(this) here
-    });
-})
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
 
-function displaySearchResults(x){
-    alert("Yeah! " +$(this).attr("id"));
-    $('tbody').attr("name", x);
-}
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    } );
+});

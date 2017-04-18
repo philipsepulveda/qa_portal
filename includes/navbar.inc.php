@@ -1,4 +1,3 @@
-<!--Created by IntelliJ IDEA.-->
 <!--User: ps15-->
 <!--Date: 2/03/2017-->
 <!--Time: 2:53 PM-->
