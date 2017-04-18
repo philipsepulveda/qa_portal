@@ -39,6 +39,7 @@ function traverseTestResultsFolder($rootAppDir, $rootAppDirArray)
                 if (!$environmentDirArray) {
                     die("Scanning test results directory failed");
                 }
+                //Calls the method that traverses the contents of each service
                 traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environmentDir);
             } else {
                 echo 'Error encountered while scanning services folder. Please make sure the directory exists.';
@@ -50,14 +51,17 @@ function traverseTestResultsFolder($rootAppDir, $rootAppDirArray)
 function traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environmentDir)
 {
     foreach ($environmentDirArray as $testSummary) {
-        //Traverses the HTML files of each test environment folder
+        //Exclude first two contents of the directory which is "." and ".."
         if ($testSummary !== '.' && $testSummary !== '..') {
+            //Concatenates the html file to the environment directory to access its contents
             $htmlDir = $rootAppDir . $environmentDir . "/" . $testSummary;
+            //Checks whether path exists
             if (is_dir($htmlDir)) {
                 $theHtmlFile = scandir($htmlDir, 0);
                 if (!$testSummary) {
                     die("Scanning test summary file failed");
                 }
+                //Calls the method that traverses the contents of html files for each service
                 displayTestRun($htmlDir, $theHtmlFile, $testSummary, $environmentDir);
             } else {
                 echo 'Error encountered while scanning environments folder. Please make sure the directory is in the correct hierarchy.<br>test_results/service/environment/test_summary';
@@ -69,9 +73,11 @@ function traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environme
 function displayTestRun($htmlDir, $theHtmlFile, $testSummary, $environmentDir)
 {
     foreach ($theHtmlFile as $html) {
-        //Path of python script htmlscraper.py
+        //Path of python script htmlscraper.py that scrapes the data off the html files
         $result = "C://Python27/python.exe C://xampp/htdocs/THL_QAportal/htmlscraper.py ";
+        //Exclude first two contents of the directory which is "." and ".."
         if ($html !== '.' && $html !== '..') {
+            //Concatenates the html name to the environment directory for python script execution
             $result .= $htmlDir."/".$html;
             if ($html !== "") {
                 //Read the html file as text and get elements for Test Run(Date), Environment(Dev, Stage, Prod or Test) and Summary
