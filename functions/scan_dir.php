@@ -1,54 +1,174 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
  * User: ps15
  * Date: 2/03/2017
  * Time: 4:44 PM
  */
+//Change this path to specify the directory of the test_results folder
+$rootAppDir = "C:/xampp/htdocs/THL_QAPortal/test_results/";
 
+<<<<<<< HEAD
+=======
 //This function displays the main folders of the test results
-function displayTestResultsTable(){
-    $dir = "C:/xampp/htdocs/QAPortal/test_results";
-    $array = scandir($dir, 0);
-    if(!$array){
-        die("Scanning failed");
-    }
-
-    echo '<div class="btn-group btn-group-vertical btn-group-md" data-toggle="buttons" style="width: 100%;">';
-    foreach($array as $value){
-        if($value !== '.' && $value !== '..'){
-            echo '<label class="btn btn-default" onclick="displaySearchResults('.$value.')" id="'.$value.'">';
-            echo '<input type="radio" name="options" autocomplete="off">';
-            $value = str_replace("_", " ", $value);
-            print_r(ucwords($value));
-            echo '</label>';
+function displayTestResultsTable($rootAppDir)
+{
+    if (is_dir($rootAppDir)) {
+        $rootAppDirArray = scandir($rootAppDir, 0);
+        if (!$rootAppDirArray) {
+            die("Scanning failed");
         }
+        echo '<div class="btn-group btn-group-vertical btn-group-md" data-toggle="buttons" style="width: 100%;">';
+        foreach ($rootAppDirArray as $environmentDir) {
+            if ($environmentDir !== '.' && $environmentDir !== '..') {
+                echo '<label class="btn btn-default" onclick="displaySearchResults(' . $environmentDir . ')" id="' . $environmentDir . '">';
+                echo '<input type="radio" name="options" autocomplete="off">';
+                $environmentDir = str_replace("_", " ", $environmentDir);
+                print_r(ucwords($environmentDir));
+                echo '</label>';
+            }
+        }
+        echo '</div>';
+    } else {
+        echo 'Error encountered while scanning test_results folder. Please make sure the directory exists.';
     }
-    echo '</div>';
 }
 
-function displaySearchResults($value){
-
-    echo '<div class="row">';
-    echo $value;
-    echo '<div>';
-
-    $dir = "C:/xampp/htdocs/QAPortal/test_results/".$value;
-    $testResults = scandir($dir, 0);
-
-
-    if (!$testResults) {
-        die("Scanning of test_results dir failed");
+>>>>>>> 3def6c4c8db9fd330a980f1f3bdbed850a59a2c0
+function displaySearchResults($rootAppDir)
+{
+    //Checks whether path exists
+    if (is_dir($rootAppDir)) {
+        $rootAppDirArray = scandir($rootAppDir, 0);
+        //Error comes up if scanning failed
+        if (!$rootAppDirArray) {
+            die("Scanning main directory failed");
+        } else {
+            //Traverses the contents of the test_results directory
+            echo '<tbody id="table-results">';
+            traverseTestResultsFolder($rootAppDir, $rootAppDirArray);
+            echo '</tbody>';
+        }
     } else {
-        foreach ($testResults as $environment) {
-            //Scan contents of subfolder environment
-            $dirEnvironment = "C:/xampp/htdocs/QAPortal/test_results/" . $environment;
-            echo $dirEnvironment . " </br>";
-            $testSummary = scandir($dirEnvironment, 0);
-            if (!$testSummary) {
-                die("Scanning of test sumamary failed");
-            }
+        echo 'Error encountered while scanning test_results folder. Please make sure the directory exists.';
+    }
+}
 
+function traverseTestResultsFolder($rootAppDir, $rootAppDirArray)
+{
+    foreach ($rootAppDirArray as $environmentDir) {
+        //Exclude first two contents
+        if ($environmentDir !== '.' && $environmentDir !== '..') {
+            //Traverses the contents inside the testServices folders
+            $environmentDirArray = $rootAppDir . $environmentDir;
+            //Checks whether path exists
+            if (is_dir($environmentDirArray)) {
+                $environmentDirArray = scandir($environmentDirArray, 0);
+                if (!$environmentDirArray) {
+                    die("Scanning test results directory failed");
+                }
+                traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environmentDir);
+            } else {
+                echo 'Error encountered while scanning services folder. Please make sure the directory exists.';
+            }
         }
     }
+}
+
+function traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environmentDir)
+{
+    foreach ($environmentDirArray as $testSummary) {
+<<<<<<< HEAD
+        //Traverses the HTML files of each test environment folder
+        if ($testSummary !== '.' && $testSummary !== '..') {
+            $htmlDir = $rootAppDir . $environmentDir . "/" . $testSummary;
+            if (is_dir($htmlDir)) {
+                $theHtmlFile = scandir($htmlDir, 0);
+                if (!$testSummary) {
+                    die("Scanning test summary file failed");
+                }
+                displayTestRun($htmlDir, $theHtmlFile, $testSummary, $environmentDir);
+=======
+        //Traverses the HTML files of each test environment folders
+        if ($testSummary !== '.' && $testSummary !== '..') {
+//            echo '<br>-->'. $testSummaryFile;
+            $theHtmlFile = $rootAppDir . $environmentDir . "/" . $testSummary;
+            if (is_dir($theHtmlFile)) {
+                $theHtmlFile = scandir($theHtmlFile, 0);
+                if (!$testSummary) {
+                    die("Scanning test summary file failed");
+                }
+                displayTestRun($theHtmlFile, $testSummary);
+>>>>>>> 3def6c4c8db9fd330a980f1f3bdbed850a59a2c0
+            } else {
+                echo 'Error encountered while scanning environments folder. Please make sure the directory is in the correct hierarchy.<br>test_results/service/environment/test_summary';
+            }
+        }
+    }
+}
+
+<<<<<<< HEAD
+function displayTestRun($htmlDir, $theHtmlFile, $testSummary, $environmentDir)
+{
+    foreach ($theHtmlFile as $html) {
+        //Path of python script htmlscraper.py
+        $result = "C://Python27/python.exe C://xampp/htdocs/THL_QAportal/htmlscraper.py ";
+        if ($html !== '.' && $html !== '..') {
+            $result .= $htmlDir."/".$html;
+            if ($html !== "") {
+                //Read the html file as text and get elements for Test Run(Date), Environment(Dev, Stage, Prod or Test) and Summary
+                echo '<tr>
+                        <td>' .ucwords(str_replace("_", " ", $environmentDir)).'</td>
+                        <td>' . str_replace("_", "-", substr($html, 0, 10)) . ' ' . str_replace("_", ":", substr($html, 11, 5)) . '</td>
+                        <td>' . ucwords($testSummary) . '</td>
+                        <td>' .exec($result). '</td>
+                        </tr>';
+            }
+        }
+    }
+=======
+function displayTestRun($theHtmlFile, $testSummary)
+{
+    foreach ($theHtmlFile as $html) {
+        if ($html !== '.' && $html !== '..') {
+//            echo '<br>-->'. $html;
+            if ($html !== "") {
+                //Read the html file as text and get elements for Test Run(Date), Environment(Dev, Stage, Prod or Test) and Summary
+                echo '<tr>
+                        <td>' . str_replace("_", "-", substr($html, 0, 10)) . ' ' . str_replace("_", ":", substr($html, 11, 5)) . '</td>
+                        <td>' . ucwords($testSummary) . '</td>
+                        <td>Stories: NULL | Scenarios: NULL | Passed : NULL | Inconclusive: NULL | Not Implemented: NULL | Failed: NULL </td>
+                      </tr>';
+            }
+        }
+    }
+}
+
+function generateJsonFile($rootAppDir)
+{
+    //Checks if directory path exists
+    if (is_dir($rootAppDir)) {
+        //Scans the directory path
+        $rootAppDirArray = scandir($rootAppDir, 0);
+        //Checks if scanning was successful
+        if (!$rootAppDirArray) {
+            die("Scanning failed");
+        }
+        //Traverses the files of the root folder
+        foreach ($rootAppDirArray as $service) {
+            //Excludes the first two files which are . and ..
+            if ($service !== '.' && $service !== '..') {
+                $serviceArray[] = array(
+                    //HOW DO WE NAME THE ENVIRONMENTS?
+                );
+                $service = str_replace("_", " ", $service);
+                print_r(ucwords($service));
+                echo '</label>';
+            }
+        }
+        echo '</div>';
+    } else {
+        echo 'Error encountered while scanning test_results folder. Please make sure the directory exists.';
+    }
+
+>>>>>>> 3def6c4c8db9fd330a980f1f3bdbed850a59a2c0
 }
