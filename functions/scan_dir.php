@@ -73,19 +73,21 @@ function traverseEnvironmentFolder($rootAppDir, $environmentDirArray, $environme
 function displayTestRun($htmlDir, $theHtmlFile, $testSummary, $environmentDir)
 {
     foreach ($theHtmlFile as $html) {
-        //Path of python script htmlscraper.py that scrapes the data off the html files
-        $result = "C://Python27/python.exe C://xampp/htdocs/THL_QAportal/htmlscraper.py ";
+        //Path of python scripts html_scraper.py and html_test_run.py that scrapes the data off the html files
+        $summary = "C://Python27/python.exe C://xampp/htdocs/THL_QAportal/html_scraper.py ";
+        $testRun = "C://Python27/python.exe C://xampp/htdocs/THL_QAportal/html_test_run.py ";
         //Exclude first two contents of the directory which is "." and ".."
         if ($html !== '.' && $html !== '..') {
             //Concatenates the html name to the environment directory for python script execution
-            $result .= $htmlDir."/".$html;
+            $summary .= $htmlDir."/".$html;
+            $testRun .= $htmlDir."/".$html;
             if ($html !== "") {
                 //Read the html file as text and get elements for Test Run(Date), Environment(Dev, Stage, Prod or Test) and Summary
                 echo '<tr>
                         <td>' .ucwords(str_replace("_", " ", $environmentDir)).'</td>
-                        <td>' . str_replace("_", "-", substr($html, 0, 10)) . ' ' . str_replace("_", ":", substr($html, 11, 5)) . '</td>
+                        <td>' . exec($testRun) . '</td>
                         <td>' . ucwords($testSummary) . '</td>
-                        <td>' .exec($result). '</td>
+                        <td>' . exec($summary). '</td>
                         </tr>';
             }
         }
